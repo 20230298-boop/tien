@@ -1,0 +1,15 @@
+Trong phần này, tôi tạo các index để tối ưu các truy vấn JOIN và truy vấn có điều kiện lọc.
+
+Index idx_loans_status_due(status, due_date) được tạo để tối ưu các truy vấn Q4 và Q8,
+vì các truy vấn này lọc theo trạng thái mượn và ngày đến hạn.
+
+Index idx_loans_member_date(member_id, loan_date) giúp tối ưu truy vấn Q10,
+khi thống kê số phiếu mượn theo thành viên trong 30 ngày gần nhất.
+
+Index idx_loan_items_book(book_id) giúp tăng tốc độ JOIN giữa bảng loan_items và books.
+Index idx_books_category(category_id) giúp tối ưu các truy vấn thống kê theo danh mục.
+
+So sánh kết quả EXPLAIN cho thấy sau khi tạo index,
+MySQL đã sử dụng index (cột key không còn NULL),
+số dòng ước lượng (rows) giảm và kiểu truy cập chuyển từ ALL sang ref/range,
+chứng tỏ hiệu năng truy vấn được cải thiện.
